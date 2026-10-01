@@ -1,0 +1,19 @@
+.card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-md);box-shadow:var(--shadow-xs)}
+.card-pad{padding:20px}
+.card-hover{transition:box-shadow .2s,transform .2s,border-color .2s}
+.card-hover:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--red-200)}
+
+/* การ์ดสถิติ */
+.stat-card{display:flex;gap:16px;align-items:center;padding:18px 20px}
+.stat-ico{width:52px;height:52px;border-radius:14px;display:flex;
+  align-items:center;justify-content:center;flex:none}
+.stat-ico.red{background:var(--red-50);color:var(--red-600)}
+.stat-ico.green{background:var(--success-bg);color:var(--success)}
+.stat-ico.amber{background:var(--warning-bg);color:var(--warning)}
+.stat-ico.gray{background:var(--gray-100);color:var(--gray-500)}
+.stat-num{font-size:26px;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums}
+.stat-label{font-size:13px;color:var(--text-2);margin-top:2px}
+.stat-trend{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:500;margin-top:6px}
+.stat-trend.up{color:var(--success)}
+.stat-trend.down{color:var(--red-600)}

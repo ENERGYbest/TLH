@@ -1,0 +1,31 @@
+-- Create one checkout row per attendance/check-in record.
+-- Run this script in the Supabase SQL Editor.
+create table if not exists public.attendance_checkout (
+  rid bigint primary key references public.attendance(rid) on delete cascade,
+  "dateOut" text not null,
+  "timeOut" text not null,
+  "photoOut" text,
+  created_at timestamptz not null default now()
+);
+
+alter table public.attendance_checkout enable row level security;
+grant select, insert, update, delete on public.attendance_checkout to anon, authenticated;
+
+do $$
+begin
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'attendance_checkout'
+      and policyname = 'attendance_checkout_app_access'
+  ) then
+    create policy attendance_checkout_app_access
+      on public.attendance_checkout
+      for all
+      to anon, authenticated
+      using (true)
+      with check (true);
+  end if;
+end
+$$;

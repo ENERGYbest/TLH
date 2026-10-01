@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ทดสอบ API — T.L.H. Engineering</title>
+<style>
+  body{margin:0;min-height:100vh;background:#F4F5F7;display:flex;align-items:center;
+       justify-content:center;padding:20px;font-family:Kanit,-apple-system,sans-serif;color:#1B1F27}
+  .card{max-width:560px;width:100%;background:#fff;border-radius:18px;
+        box-shadow:0 16px 48px rgba(0,0,0,.12);padding:26px;border-top:6px solid #D01B22}
+  h1{font-size:18px;color:#A8141A;margin:0 0 4px}
+  p.sub{font-size:12.5px;color:#5A6272;margin:0 0 14px}
+  label{font-size:12px;font-weight:600;color:#4E5563;display:block;margin:10px 0 4px}
+  input{width:100%;padding:10px 12px;border:1px solid #CBD0DA;border-radius:9px;
+        font-size:13px;font-family:inherit;box-sizing:border-box}
+  .btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .btn{flex:1;min-width:150px;border:0;border-radius:9px;padding:11px 14px;font-size:13.5px;
+       cursor:pointer;font-family:inherit;color:#fff;background:#D01B22}
+  .btn.gray{background:#4E5563}
+  .out{margin-top:14px;background:#EEF0F4;border-radius:12px;padding:14px;
+       font-size:12.5px;line-height:1.7;white-space:pre-wrap;word-break:break-all;
+       max-height:300px;overflow:auto;display:none}
+  .ok{color:#178A66;font-weight:700}.bad{color:#D01B22;font-weight:700}
+  img.test{max-width:180px;border-radius:10px;margin-top:8px;border:1px solid #CBD0DA;display:none}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🔧 ทดสอบการเชื่อมต่อ Google Sheet</h1>
+  <p class="sub">ทดสอบก่อนใช้งานจริง — บอกว่า Backend ใช้ได้ไหม ผิดตรงไหน</p>
+
+  <label>URL จาก Deploy (/exec)</label>
+  <input id="t-url" value="https://script.google.com/macros/s/AKfycbyscZ1HdH4F_jamE3mQVhc_XsfIVXlvAJkC6j-MqYbD3VV7iTQ7BdKjVLejR6jyaLUT/exec">
+  <label>SECRET</label>
+  <input id="t-key" value="TLH-SECRET-2569">
+
+  <div class="btns">
+    <button class="btn" onclick="testGet()">① ทดสอบอ่าน (GET)</button>
+    <button class="btn gray" onclick="testPost()">② ทดสอบเขียน (POST)</button>
+    <button class="btn gray" onclick="testPhoto()">③ ทดสอบรูป → Drive</button>
+  </div>
+
+  <div class="out" id="out"></div>
+  <img class="test" id="testimg" alt="รูปทดสอบ">
+  <p style="font-size:11.5px;color:#9AA1B0;margin:12px 0 0">
+    ผ่านทั้ง 3 ข้อ = ระบบพร้อมใช้ · เปิด login.html แล้วข้อมูลจะ seed ขึ้น Sheet เอง</p>
+</div>
+
+<script>
+async function jf(url, opts) {
+  const res = await fetch(url, opts);
+  const text = await res.text();
+  try { return { j: JSON.parse(text), raw: text }; }
+  catch { return { j: null, raw: text }; }
+}
+function show(html) {
+  const o = document.getElementById("out");
+  o.style.display = "block";
+  o.innerHTML = html;
+}
+function url()  { return document.getElementById("t-url").value.trim(); }
+function key()  { return document.getElementById("t-key").value.trim(); }
+
+/* ① GET */
+async function testGet() {
+  show("⏳ กำลังทดสอบ…");
+  try {
+    const { j, raw } = await jf(url() + "?key=" + encodeURIComponent(key()));
+    if (!j) {
+      show("<span class='bad'>❌ ได้รับข้อความไม่ใช่ JSON</span>\n\nตอบกลับ: " + raw.slice(0, 300) +
+        "\n\n<span class='bad'>สาเหตุ: Deploy ผิด — ไป Apps Script → Deploy → Manage deployments</span>\n" +
+        "ตรวจว่า: Execute as = <b>Me</b> · Who has access = <b>Anyone</b>\n" +
+        "และแก้โค้ดแล้วต้องกด ✏️ → Version: New version → Deploy ทุกครั้ง");
+      return;
+    }
+    if (!j.ok) {
+      show("<span class='bad'>❌ เชื่อมได้แต่ key ไม่ถูก:</span> " + j.msg +
+        "\n\n→ ตรวจ SECRET ให้ตรงกับ Code.gs บรรทัดบนสุด");
+      return;
+    }
+    const keys = Object.keys(j.data || {});
+    show("<span class='ok'>✅ อ่านข้อมูลได้!</span>\nพบข้อมูล " + keys.length + " ชุด: " +
+      (keys.join(", ") || "(ยังไม่มี — ยังไม่ seed)") +
+      "\n\nถ้ายังไม่มีข้อมูล: กดปุ่ม ② ทดสอบเขียนก่อน");
+  } catch (e) {
+    show("<span class='bad'>❌ ติดต่อไม่ได้:</span> " + e.message);
+  }
+}
+
+/* ② POST */
+async function testPost() {
+  show("⏳ กำลังทดสอบเขียน…");
+  try {
+    const { j, raw } = await jf(url(), {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ key: key(), action: "save", key2: "tlh_test", value: "ทดสอบ " + new Date().toLocaleString("th-TH") })
+    });
+    /* หมายเหตุ: ส่ง key ซ้ำชื่อ field — ปรับให้ตรง Code.gs: ใช้ key เป็นชื่อข้อมูล */
+    if (!j) {
+      show("<span class='bad'>❌ POST ไม่สำเร็จ (ไม่ใช่ JSON):</span>\n" + raw.slice(0, 300));
+      return;
+    }
+    if (!j.ok) { show("<span class='bad'>❌ key ไม่ถูก:</span> " + j.msg); return; }
+
+    /* เขียนจริงตามรูปแบบ Code.gs */
+    const r2 = await jf(url(), {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ key: key(), action: "save", key2: "x" })
+    });
+    show("<span class='ok'>✅ เขียนได้!</span>\n→ เปิด Google Sheet แล้วกดรีเฟรช จะเห็นแท็บ <b>config</b> และแถวข้อมูล\n" +
+      "ถ้าในเว็บยังเปล่า = ปัญหาอยู่ที่ไฟล์ js/api.js ในโปรเจกต์ (เช็คชื่อ/ตำแหน่งไฟล์ และ F12 → Console)");
+  } catch (e) {
+    show("<span class='bad'>❌ POST ติดต่อไม่ได้:</span> " + e.message);
+  }
+}
+
+/* ③ รูป → Drive */
+async function testPhoto() {
+  show("⏳ กำลังสร้างรูปทดสอบและอัปโหลด…");
+  try {
+    const c = document.createElement("canvas");
+    c.width = 120; c.height = 120;
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "#D01B22"; ctx.fillRect(0, 0, 120, 120);
+    ctx.fillStyle = "#fff"; ctx.font = "bold 20px sans-serif";
+    ctx.textAlign = "center"; ctx.fillText("TLH", 60, 68);
+    const dataUrl = c.toDataURL("image/jpeg", 0.8);
+
+    const { j, raw } = await jf(url(), {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ key: key(), action: "uploadPhoto",
+        base64: dataUrl.split(",")[1], name: "test_api.jpg" })
+    });
+    if (!j) { show("<span class='bad'>❌ ไม่ใช่ JSON:</span>\n" + raw.slice(0, 200)); return; }
+    if (!j.ok) { show("<span class='bad'>❌ key ไม่ถูก:</span> " + j.msg); return; }
+
+    const img = document.getElementById("testimg");
+    img.src = j.url; img.style.display = "block";
+    show("<span class='ok'>✅ อัปโหลดรูปขึ้น Drive สำเร็จ!</span>\nลิงก์: " + j.url +
+      "\n\n→ ไปที่ drive.google.com จะเห็นโฟลเดอร์ <b>TLH-Photos</b> ใน 'ไดรฟ์ของฉัน'");
+  } catch (e) {
+    show("<span class='bad'>❌ อัปโหลดไม่ได้:</span> " + e.message);
+  }
+}
+</script>
+</body>
+</html>

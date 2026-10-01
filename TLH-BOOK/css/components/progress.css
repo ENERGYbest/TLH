@@ -1,0 +1,8 @@
+.progress{height:8px;background:var(--gray-100);border-radius:99px;overflow:hidden}
+.progress-bar{height:100%;border-radius:99px;background:var(--red-600);
+  transition:width .6s cubic-bezier(.22,1,.36,1)}
+.progress-bar.green{background:var(--success)}
+.progress-bar.amber{background:var(--warning)}
+.progress-row{display:flex;align-items:center;gap:10px}
+.progress-row .val{font-size:12px;font-weight:600;color:var(--text-2);
+  width:38px;text-align:right;flex:none}

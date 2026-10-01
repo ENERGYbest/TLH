@@ -1,0 +1,24 @@
+.att-thumb{width:44px;height:44px;border-radius:10px;object-fit:cover;cursor:pointer;
+  border:1px solid var(--gray-200)}
+.att-thumb-empty{width:44px;height:44px;border-radius:10px;flex:none;
+  background:linear-gradient(135deg,var(--red-800),var(--red-500));
+  display:flex;align-items:center;justify-content:center;color:#fff}
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.filter-bar .input,.filter-bar .select{width:auto;min-width:170px}
+.attendance-card-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:10px;padding:0 16px 16px}
+.attendance-card{display:grid;gap:12px;padding:14px;min-width:0}
+.attendance-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.attendance-card-person{display:flex;align-items:center;gap:10px;min-width:0}
+.attendance-card-person>div{min-width:0;overflow-wrap:anywhere}
+.attendance-card-detail{display:grid;grid-template-columns:72px minmax(0,1fr);align-items:start;gap:10px;min-width:0}
+.attendance-card-detail>span:last-child{min-width:0;overflow-wrap:anywhere}
+.attendance-checkout-info{display:flex;align-items:center;gap:8px;flex-wrap:wrap;min-width:0}
+@media (max-width:640px){
+  .filter-bar{display:grid;grid-template-columns:1fr 1fr}
+  .filter-bar .input,.filter-bar .select{width:100%;min-width:0}
+  .filter-bar .btn{width:100%}
+  .filter-bar .chips,.filter-bar .view-toggle{grid-column:1/-1;justify-self:start}
+  .filter-bar .chips{flex-wrap:nowrap!important;max-width:100%;overflow-x:auto;padding-bottom:6px}
+  .filter-bar .chip{flex:none;white-space:nowrap}
+}
+.big-photo{width:100%;max-width:320px;margin:0 auto;display:block;border-radius:14px}

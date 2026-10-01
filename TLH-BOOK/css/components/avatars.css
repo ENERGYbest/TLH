@@ -1,0 +1,9 @@
+.avatar{width:34px;height:34px;border-radius:99px;display:inline-flex;align-items:center;
+  justify-content:center;color:#fff;font-size:12px;font-weight:600;flex:none;
+  border:2px solid #fff;box-shadow:var(--shadow-xs)}
+.avatar-sm{width:26px;height:26px;font-size:10px}
+.avatar-lg{width:42px;height:42px;font-size:14px}
+.avatar-group{display:inline-flex}
+.avatar-group .avatar{margin-left:-8px}
+.avatar-group .avatar:first-child{margin-left:0}
+.avatar-more{background:var(--gray-200);color:var(--gray-600)}

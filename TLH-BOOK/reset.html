@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ล้างข้อมูลระบบ — T.L.H. Engineering</title>
+<style>
+  body{margin:0;min-height:100vh;background:#F4F5F7;display:flex;align-items:center;
+       justify-content:center;padding:20px;font-family:Kanit,-apple-system,sans-serif;color:#1B1F27}
+  .card{max-width:520px;width:100%;background:#fff;border-radius:18px;
+        box-shadow:0 16px 48px rgba(0,0,0,.12);padding:28px;border-top:6px solid #D01B22}
+  h1{font-size:19px;color:#A8141A;margin:0 0 6px}
+  p{font-size:13.5px;color:#5A6272;line-height:1.7;margin:8px 0}
+  .list{background:#EEF0F4;border-radius:12px;padding:12px 16px;font-size:12.5px;
+        line-height:1.9;color:#383E4A;margin:14px 0;max-height:200px;overflow:auto}
+  .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+  .btn{flex:1;min-width:180px;border:0;border-radius:10px;padding:13px 16px;
+       font-size:14px;cursor:pointer;font-family:inherit}
+  .btn-red{background:#D01B22;color:#fff}
+  .btn-gray{background:#fff;color:#383E4A;border:1.5px solid #CBD0DA}
+  small{color:#9AA1B0;font-size:11.5px;display:block;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🧹 ล้างข้อมูลระบบ</h1>
+  <p>ใช้หน้านี้เมื่อระบบแสดงผลผิดปกติ / วนลูป / ข้อมูลค้างจากเวอร์ชันก่อน —
+     จะลบข้อมูลที่เก็บไว้ในเบราว์เซอร์นี้ทั้งหมด แล้วเริ่มต้นใหม่</p>
+  <div class="list" id="key-list">(กำลังตรวจสอบ…)</div>
+  <div class="btns">
+    <button class="btn btn-red" id="do-clear">ล้างข้อมูลทั้งหมด</button>
+    <button class="btn btn-gray" onclick="location.href='login.html'">ยกเลิก</button>
+  </div>
+  <small>หลังล้างข้อมูล บัญชีจะสร้างใหม่อัตโนมัติ · Admin = รหัส 1001 · PIN 1234</small>
+</div>
+<script>
+(function () {
+  var list = document.getElementById("key-list");
+  var keys = [];
+  try {
+    for (var i = 0; i < localStorage.length; i++) {
+      var k = localStorage.key(i);
+      if (k && k.indexOf("tlh") === 0) keys.push(k);
+    }
+  } catch (e) {}
+
+  if (!keys.length) {
+    list.textContent = "✅ ไม่มีข้อมูล TLH ค้างอยู่เลย — ระบบสะอาดแล้ว";
+  } else {
+    list.innerHTML = "<b>ข้อมูลที่จะถูกลบ (" + keys.length + " รายการ):</b><br>" +
+      keys.map(function (k) {
+        var v = "";
+        try { v = (localStorage.getItem(k) || "").slice(0, 80); } catch (e) {}
+        return "• " + k + " <span style='color:#9AA1B0'>(" + v + "…)</span>";
+      }).join("<br>");
+  }
+
+  document.getElementById("do-clear").onclick = function () {
+    try {
+      keys.forEach(function (k) { localStorage.removeItem(k); });
+      ["tlh_session","tlh_staff","tlh_settings","tlh_company","tlh_attendance"]
+        .forEach(function (k) { localStorage.removeItem(k); });
+      sessionStorage.removeItem("_tlh_bounce");
+    } catch (e) {}
+    this.textContent = "✅ ล้างข้อมูลเรียบร้อย — กำลังไปหน้า Login…";
+    this.disabled = true;
+    setTimeout(function () { location.href = "login.html"; }, 800);
+  };
+})();
+</script>
+</body>
+</html>

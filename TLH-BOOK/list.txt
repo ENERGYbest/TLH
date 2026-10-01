@@ -1,0 +1,105 @@
+Folder PATH listing
+Volume serial number is 38F3-CBC5
+C:.
+|   attendance.html
+|   board.html
+|   entities.html
+|   index.html
+|   list.txt
+|   login.html
+|   logo.jpg
+|   make-icons.html
+|   manifest.json
+|   profile.html
+|   projects.html
+|   reset.html
+|   settings.html
+|   sw.js
+|   test-api.html
+|   timesheet.html
+|   users.html
+|   
++---.continue
+|   \---agents
+|           new-config.yaml
+|           
++---css
+|   |   base.css
+|   |   layout.css
+|   |   variables.css
+|   |   
+|   +---components
+|   |       avatars.css
+|   |       badges.css
+|   |       buttons.css
+|   |       cards.css
+|   |       charts.css
+|   |       export.css
+|   |       forms.css
+|   |       modals.css
+|   |       progress.css
+|   |       tables.css
+|   |       toast.css
+|   |       usertopbar.css
+|   |       
+|   \---pages
+|           attendance.css
+|           board.css
+|           chat.css
+|           dashboard.css
+|           entities.css
+|           gantt.css
+|           login.css
+|           profile.css
+|           projects.css
+|           settings.css
+|           timesheet.css
+|           users.css
+|           
++---img
+|       apple-touch-icon.png
+|       favicon-32.png
+|       icon-192.png
+|       icon-512.png
+|       icon-maskable-512.png
+|       icon.svg
+|       
++---js
+|   |   api.js
+|   |   bootcheck.js
+|   |   data.js
+|   |   utils.js
+|   |   
+|   +---components
+|   |       auth.js
+|   |       camera.js
+|   |       charts.js
+|   |       export.js
+|   |       icons.js
+|   |       install.js
+|   |       modal.js
+|   |       projectForm.js
+|   |       sidebar.js
+|   |       toast.js
+|   |       topbar.js
+|   |       
+|   \---pages
+|           attendance.js
+|           board.js
+|           dashboard.js
+|           entities.js
+|           gantt.js
+|           login.js
+|           profile.js
+|           projects.js
+|           settings.js
+|           timesheet.js
+|           users.js
+|           
+\---supabase
+    |   attendance_checkout.sql.txt
+    |   
+    \---migrations
+            202610010001_add_attendance_checkout_fields.sql
+            202610010002_add_checkout_fields.sql
+            

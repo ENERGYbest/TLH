@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>สร้างไอคอน TLH ทุกขนาด</title>
+<style>
+  body{font-family:Kanit,sans-serif;background:#F4F5F7;margin:0;padding:24px;
+       display:flex;flex-direction:column;align-items:center;gap:16px}
+  h1{font-size:20px;color:#A8141A;margin:0}
+  p{font-size:13px;color:#5A6272;margin:0;text-align:center;max-width:520px;line-height:1.7}
+  .row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
+  .out{background:#fff;border:1px solid #E5E8EE;border-radius:14px;padding:16px;
+       display:flex;flex-direction:column;align-items:center;gap:8px;width:130px}
+  .out img{border-radius:22px;border:1px solid #CBD0DA}
+  .out canvas{border-radius:22px;border:1px solid #CBD0DA}
+  .name{font-size:11.5px;color:#383E4A;font-weight:600}
+  .size{font-size:10.5px;color:#9AA1B0}
+  button{background:#D01B22;color:#fff;border:0;border-radius:10px;padding:12px 22px;
+         font-size:14px;cursor:pointer;font-family:inherit;font-weight:600}
+  .done{color:#1FA97C;font-weight:700;font-size:14px}
+</style>
+</head>
+<body>
+<h1>🎨 สร้างไอคอน TLH ทุกขนาด</h1>
+<p>กดปุ่มสร้าง → คลิกขวาแต่ละภาพ → "บันทึกภาพในชื่อ..." ตามชื่อที่เขียนใต้ภาพ
+   แล้วนำไปวางในโฟลเดอร์ <b>img/</b> ของโปรเจกต์</p>
+<button id="gen">สร้างไอคอนทั้งหมด</button>
+<div class="done" id="status"></div>
+<div class="row" id="out"></div>
+
+<script>
+document.getElementById("gen").onclick = () => {
+  const LOGO = "https://www.tlh.co.th/assets/images/logo-tlh-122x121.jpg";
+
+  const img = new Image();
+  img.crossOrigin = "anonymous";
+  img.onload = () => { draw(img); };
+  img.onerror = () => {
+    document.getElementById("status").textContent =
+      "❌ โหลดโลโก้ไม่ได้ — เซฟโลโก้ TLH เป็นไฟล์ logo.jpg วางข้างไฟล์นี้แล้วกดใหม่";
+    const im2 = new Image();
+    im2.onload = () => draw(im2);
+    im2.src = "logo.jpg";
+  };
+  img.src = LOGO;
+
+  function draw(logo) {
+    const out = document.getElementById("out");
+    out.innerHTML = "";
+    document.getElementById("status").textContent = "✅ สร้างแล้ว — คลิกขวาแต่ละภาพเพื่อบันทึก";
+
+    const sizes = [
+      { w: 192,  name: "icon-192.png" },
+      { w: 512,  name: "icon-512.png" },
+      { w: 512,  name: "icon-maskable-512.png", maskable: true },
+      { w: 180,  name: "apple-touch-icon.png", pad: 0 },
+      { w: 32,   name: "favicon-32.png" }
+    ];
+
+    sizes.forEach(s => {
+      const c = document.createElement("canvas");
+      c.width = s.w; c.height = s.w;
+
+      /* พื้นหลัง: ขาว (โลโก้ TLH เป็นสีแดงบนพื้นขาว สวยสะอาด) */
+      const ctx = c.getContext("2d");
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, 0, s.w, s.w);
+
+      /* วาดโลโก้ตรงกลาง — ปกติใช้ 78% / maskable ใช้ 62% (เผื่อ Android ตัดขอบ) */
+      const ratio = s.maskable ? 0.62 : 0.78;
+      const lw = s.w * ratio;
+      const lh = lw * (logo.height / logo.width);
+      const x = (s.w - lw) / 2, y = (s.w - lh) / 2;
+      ctx.drawImage(logo, x, y, lw, lh);
+
+      /* แสดงผล */
+      c.className = "preview";
+      c.style.width = s.w >= 180 ? "80px" : "48px";
+      c.style.height = c.style.width;
+
+      const box = document.createElement("div");
+      box.className = "out";
+      box.appendChild(c);
+      box.insertAdjacentHTML("beforeend",
+        `<div class="name">${s.name}</div><div class="size">${s.w}×${s.w}</div>`);
+      out.appendChild(box);
+
+      /* คลิก = ดาวน์โหลด (ง่ายกว่าคลิกขวา) */
+      c.style.cursor = "pointer";
+      c.title = "คลิกเพื่อดาวน์โหลด " + s.name;
+      c.onclick = () => {
+        const a = document.createElement("a");
+        a.href = c.toDataURL("image/png");
+        a.download = s.name;
+        a.click();
+      };
+    });
+  }
+};
+</script>
+</body>
+</html>

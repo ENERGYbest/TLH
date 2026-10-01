@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>เข้าสู่ระบบ — T.L.H. Engineering</title>
+<link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png" sizes="180x180">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#D01B22">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="TLH เช็คอิน">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components/buttons.css">
+<link rel="stylesheet" href="css/components/forms.css">
+<link rel="stylesheet" href="css/components/toast.css">
+<link rel="stylesheet" href="css/pages/login.css">
+</head>
+<body class="page-login" data-page="login">
+  <main class="login-wrap">
+    <div class="login-card" id="login-card">
+      <div class="login-logo">
+        <img src="https://www.tlh.co.th/assets/images/logo-tlh-122x121.jpg" alt="TLH" onerror="this.remove()">
+      </div>
+      <h1>ระบบรายงานการเข้างาน</h1>
+      <p class="login-sub">บริษัท ที.แอล.เอช. เอ็นจิเนียริ่ง จำกัด</p>
+
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label>รหัสพนักงาน</label>
+          <input class="input" id="lg-id" inputmode="numeric" autocomplete="off"
+                 placeholder="กรอกรหัสพนักงาน" required autofocus>
+        </div>
+        <div class="field">
+          <label>PIN</label>
+          <div class="pin-wrap">
+            <input class="input pin-mask" id="lg-pin" type="text" inputmode="numeric"
+                   maxlength="6" placeholder="PIN 4–6 หลัก" autocomplete="off" required>
+            <button type="button" class="pin-toggle" id="pin-toggle" aria-label="แสดง/ซ่อน PIN"></button>
+          </div>
+        </div>
+        <div class="login-msg hidden" id="lg-msg"></div>
+        <button class="btn btn-primary btn-lg login-btn" type="submit">เข้าสู่ระบบ</button>
+      </form>
+    </div>
+  </main>
+
+<script src="js/data.js"></script>
+<script src="js/utils.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/api.js"></script>
+<script src="js/components/icons.js"></script>
+<script src="js/components/auth.js"></script>
+<script src="js/components/toast.js"></script>
+<script src="js/components/install.js"></script>
+<script src="js/pages/login.js"></script>
+</body>
+</html>

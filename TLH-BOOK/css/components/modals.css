@@ -1,0 +1,31 @@
+.modal-overlay{position:fixed;inset:0;background:rgba(15,17,22,.5);backdrop-filter:blur(3px);
+  z-index:var(--z-modal);display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;pointer-events:none;transition:opacity .2s}
+.modal-overlay.open{opacity:1;pointer-events:auto}
+.modal{background:var(--surface);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);
+  width:100%;max-width:520px;max-height:90vh;overflow:auto;
+  transform:translateY(14px) scale(.98);transition:transform .22s cubic-bezier(.22,1,.36,1)}
+.modal-overlay.open .modal{transform:none}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;
+  padding:18px 22px;border-bottom:1px solid var(--border)}
+.modal-head h3{font-size:16px;line-height:1.35}
+.modal-body{padding:20px 22px}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;
+  padding:16px 22px;border-top:1px solid var(--border);flex-wrap:wrap}
+.cam-guidance{margin-bottom:12px;padding:11px 13px;border:1px solid var(--red-200);
+  border-left:3px solid var(--red-600);border-radius:var(--radius-sm);background:var(--red-50);
+  color:var(--text-2);font-size:12.5px;line-height:1.55}
+.cam-guidance b{display:block;margin-bottom:4px;color:var(--red-700)}
+.cam-guidance ul{display:grid;gap:3px;padding-left:18px;list-style:disc}
+.cam-guidance li{padding-left:2px}
+
+/* ── มือถือ: modal เด้งจากล่างแบบ bottom-sheet ── */
+@media (max-width:640px){
+  .modal-overlay{padding:0;align-items:flex-end}
+  .modal{max-width:none;max-height:92vh;border-radius:18px 18px 0 0;transform:translateY(40px)}
+  .modal-head{padding:14px 16px;position:sticky;top:0;background:var(--surface);z-index:2}
+  .modal-head h3{font-size:15px}
+  .modal-body{padding:16px}
+  .modal-foot{padding:12px 16px;padding-bottom:calc(12px + env(safe-area-inset-bottom))}
+  .modal-foot .btn{flex:1;min-width:120px}
+}

@@ -1,0 +1,29 @@
+.table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tbl{width:100%;border-collapse:collapse;font-size:13.5px}
+.tbl th{text-align:left;font-size:11.5px;text-transform:uppercase;letter-spacing:.6px;
+  color:var(--text-3);font-weight:600;padding:12px 14px;white-space:nowrap;
+  border-bottom:1px solid var(--border);background:var(--surface-2)}
+.tbl td{padding:13px 14px;border-bottom:1px solid var(--border);
+  vertical-align:middle;white-space:nowrap}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover{background:var(--red-50)}
+.tbl tbody tr:last-child td{border-bottom:0}
+.cell-main{font-weight:500;color:var(--text)}
+.cell-sub{font-size:11.5px;color:var(--text-3);margin-top:1px;white-space:normal}
+
+/* ── มือถือ: ตารางเป็นการ์ด ── */
+@media (max-width:768px){
+  .tbl th,.tbl td{padding:10px 10px;font-size:13px}
+  .tbl-responsive .tbl thead{display:none}
+  .tbl-responsive .tbl,.tbl-responsive .tbl tbody{display:block;width:100%}
+  .tbl-responsive .tbl tr{display:block;border:1px solid var(--border);
+    border-radius:12px;background:var(--surface);margin-bottom:10px;
+    padding:6px 14px;box-shadow:var(--shadow-xs)}
+  .tbl-responsive .tbl tbody tr:hover{background:var(--surface)}
+  .tbl-responsive .tbl td{display:block;border:0;padding:7px 0;white-space:normal}
+  .tbl-responsive .tbl td[data-label]::before{content:attr(data-label);display:block;
+    font-size:10px;font-weight:600;color:var(--text-3);letter-spacing:.6px;
+    text-transform:uppercase;margin-bottom:2px}
+  .tbl-responsive .tbl td[data-label=""]::before,
+  .tbl-responsive .tbl td[colspan]::before{display:none}
+}

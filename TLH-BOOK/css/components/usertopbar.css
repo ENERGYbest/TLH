@@ -1,0 +1,22 @@
+/* ═══ user topbar (timesheet + profile) — โลโก้ multiply กลืนพื้นขาว ═══ */
+.user-topbar{position:sticky;top:0;z-index:800;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  padding-top:calc(10px + env(safe-area-inset-top))}
+.user-topbar .brand-logo{width:40px;height:40px;object-fit:contain;flex:none;
+  padding:2px;border:1px solid var(--red-100);border-radius:10px;background:#fff}
+.user-topbar .b-name{font-weight:700;font-size:14px;line-height:1.2;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-topbar .b-sub{font-size:11px;color:var(--text-3)}
+.user-topbar .spacer{flex:1;min-width:8px}
+.user-topbar .u-name{font-size:13px;font-weight:500;text-align:right;line-height:1.25;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:34vw}
+.user-topbar .u-pos{font-size:11px;color:var(--text-3)}
+@media (max-width:480px){
+  .user-topbar{gap:8px;padding:8px 10px}
+  .user-topbar .u-pos,.user-topbar .b-sub{display:none}
+  .user-topbar .u-name{max-width:28vw}
+}
+@media (max-width:360px){
+  .user-topbar .b-name{font-size:12.5px}
+}

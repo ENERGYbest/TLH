@@ -1,0 +1,125 @@
+/* ═══ หน้าเช็คอิน (User) — Responsive ทุกอุปกรณ์ ═══ */
+
+/* ── Topbar ── */
+.user-topbar{position:sticky;top:0;z-index:800;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:10px 14px;
+  padding-top:calc(10px + env(safe-area-inset-top))}
+.user-topbar .brand-logo{position:relative;width:40px;height:40px;border-radius:11px;
+  background:#fff;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;box-shadow:var(--shadow-xs);border:1px solid var(--red-100);flex:none}
+.user-topbar .logo-fb{position:absolute;inset:0;display:flex;align-items:center;
+  justify-content:center;color:var(--red-600);font-weight:700;font-size:13px}
+.user-topbar .brand-logo img{position:relative;width:34px;height:34px;object-fit:contain}
+.user-topbar .b-name{font-weight:700;font-size:14px;line-height:1.2}
+.user-topbar .b-sub{font-size:11px;color:var(--text-3)}
+.user-topbar .spacer{flex:1;min-width:8px}
+.user-topbar .u-name{font-size:13px;font-weight:500;text-align:right;line-height:1.25;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:34vw}
+.user-topbar .u-pos{font-size:11px;color:var(--text-3)}
+
+/* ── กลางหน้า ── */
+.ts-wrap{max-width:600px;margin:0 auto}
+.clock-card{text-align:center;padding:28px 18px 22px}
+.clock-time{font-size:clamp(44px,13vw,64px);font-weight:700;color:var(--red-600);
+  font-variant-numeric:tabular-nums;line-height:1;letter-spacing:1px}
+.clock-date{margin-top:8px;color:var(--text-2);font-size:clamp(13px,3.6vw,14.5px)}
+.ts-status{margin-top:12px}
+
+.btn-checkin{width:100%;padding:16px;font-size:clamp(15px,4.2vw,17px);
+  border-radius:14px;margin-top:16px;line-height:1.4}
+.ts-active-session{margin-top:18px;padding:16px;border:1px solid var(--red-200);border-radius:var(--radius-md);
+  background:var(--red-50);text-align:center;display:grid;justify-items:center;gap:8px}
+.ts-active-session h2{font-size:17px;line-height:1.45;overflow-wrap:anywhere}
+.ts-checkin-time{display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;font-size:13px}
+.ts-active-session .btn-checkin{margin-top:6px}
+
+.stat-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.stat-mini .card{text-align:center;padding:14px 6px}
+.stat-mini .v{font-size:clamp(17px,5vw,21px);font-weight:700;color:var(--red-600)}
+.stat-mini .l{font-size:11px;color:var(--text-2);margin-top:2px}
+
+/* ── ประวัติ ── */
+.history-item{display:flex;gap:12px;align-items:center;padding:12px;
+  border:1px solid var(--border);border-radius:12px;margin-bottom:10px;background:var(--surface)}
+.history-item .his-main{flex:1;min-width:0}
+.ts-event-list{display:grid;gap:7px;margin-top:8px;min-width:0}
+.ts-event-line{display:flex;align-items:center;gap:8px;min-width:0}
+.ts-pending-checkout{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ts-event-line>b{font-size:12px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ts-event-line .his-thumb,.ts-event-line .his-thumb-empty{width:38px;height:38px;border-radius:8px;margin-left:auto}
+.ts-checkout-btn{justify-self:start;color:var(--red-600)}
+.delete-checkin-photos{display:flex;gap:6px;flex:none}
+.delete-checkin-photos img{width:48px;height:48px;border-radius:8px;object-fit:cover}
+.history-item-actions{display:flex;align-items:flex-start;gap:2px;flex:none}
+.history-item-actions .btn-icon{width:32px;height:32px}
+.history-item-actions [data-edit-checkout]{color:var(--text-2)}
+.history-item-actions [data-edit-checkout]:hover{color:var(--red-600);background:var(--red-50)}
+.his-thumb{width:56px;height:56px;border-radius:10px;object-fit:cover;flex:none;
+  border:1px solid var(--gray-200);cursor:pointer}
+.his-thumb-empty{width:56px;height:56px;border-radius:10px;flex:none;
+  background:linear-gradient(135deg,var(--red-800),var(--red-500));
+  display:flex;align-items:center;justify-content:center;color:#fff}
+.his-main{min-width:0;flex:1}
+.his-date{font-weight:600;font-size:13.5px}
+.his-meta{font-size:12px;color:var(--text-2);margin-top:2px;line-height:1.5}
+.history-item .badge{flex:none}
+
+/* ── กล้อง ── */
+.cam-box{position:relative;background:#111;border-radius:14px;overflow:hidden;
+  aspect-ratio:3/4;max-width:300px;margin:0 auto}
+.cam-box video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
+.cam-error{position:absolute;inset:0;display:flex;flex-direction:column;gap:6px;
+  align-items:center;justify-content:center;color:#fff;font-size:13px;padding:20px;text-align:center}
+.cam-actions{display:flex;align-items:center;justify-content:space-between;margin-top:16px;gap:10px}
+.cam-shutter{width:64px;height:64px;border-radius:99px;background:#fff;
+  border:4px solid var(--red-600);box-shadow:var(--shadow-md);cursor:pointer;
+  transition:transform .1s;flex:none}
+.cam-shutter:active{transform:scale(.9)}
+.cam-shutter:disabled{opacity:.4;cursor:not-allowed}
+.cam-preview img{width:100%;max-width:300px;margin:0 auto;display:block;border-radius:14px}
+
+/* ── 📲 ปุ่มติดตั้ง (มุมขวาบน) ── */
+.install-btn{display:inline-flex;align-items:center;gap:6px;
+  background:var(--red-600);color:#fff;border:0;border-radius:99px;
+  padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;
+  font-family:inherit;white-space:nowrap;flex:none;
+  box-shadow:0 2px 8px rgba(208,27,34,.35);transition:background .15s}
+.install-btn:hover{background:var(--red-700)}
+.install-btn:active{transform:scale(.96)}
+.install-btn svg{flex:none}
+
+/* ขั้นตอนติดตั้ง iOS (ใน modal) */
+.install-steps{margin:4px 0 0 0;padding-left:22px;font-size:13.5px;color:var(--text-2);
+  line-height:2}
+.install-steps li{margin-bottom:2px}
+.install-steps b{color:var(--red-700)}
+.share-ic{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;
+  border:1.5px solid currentColor;border-radius:5px;font-size:12px;vertical-align:middle}
+
+@media (max-width:480px){
+  .install-btn{padding:7px 12px;font-size:12px}
+  .install-btn svg{width:14px;height:14px}
+}
+
+/* ── Responsive ── */
+@media (max-width:480px){
+  .user-topbar{gap:8px;padding:8px 10px}
+  .user-topbar .u-pos,.user-topbar .b-sub{display:none}
+  .user-topbar .u-name{max-width:30vw}
+  .clock-card{padding:22px 14px 18px}
+  .ts-active-session{padding:14px 12px}
+  .ts-active-session h2{font-size:16px}
+  .history-item{align-items:flex-start;padding:10px;gap:9px}
+  .history-item .his-main{min-width:0}
+  .ts-event-line{gap:6px;flex-wrap:wrap}
+  .ts-event-line .his-thumb,.ts-event-line .his-thumb-empty{width:34px;height:34px}
+  .delete-checkin-photos img{width:40px;height:40px}
+  .history-item-actions .btn-icon{width:30px;height:30px}
+  .stat-mini{gap:8px}
+  .stat-mini .card{padding:12px 4px}
+}
+@media (max-width:360px){
+  .user-topbar .b-name{font-size:12.5px}
+  .stat-mini .l{font-size:10px}
+}
